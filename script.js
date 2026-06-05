@@ -73,7 +73,7 @@
       window._fb.onAuth(function(user) {
         if (!user) {
           // بلا صفحة دخول — دخول مجهول تلقائي (يصادق كل تحميل، فلا مشكلة حفظ جلسة)
-          signInAnonymously(_auth).catch(function(e){ console.error('[anon]', e); });
+          window._fb.signInAnon().catch(function(e){ console.error('[anon]', e); });
           return;
         }
         // أي مستخدم (مجهول) → افتح اللوحة مباشرةً وحمّل البيانات

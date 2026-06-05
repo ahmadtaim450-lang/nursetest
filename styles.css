@@ -552,10 +552,6 @@
     }
     #patientDetailsModal .modal-content > div { overscroll-behavior: contain; }
     body:has(#patientDetailsModal:not(.hidden)) .bottom-nav { display: none !important; }
-    /* إخفاء الشريط الجانبي وزر الإضافة العائم أثناء فتح إضبارة المريض (يمنع ظهورهما فوق المحتوى) */
-    body:has(#patientDetailsModal:not(.hidden)) .rail,
-    body:has(#patientDetailsModal:not(.hidden)) #desktopSpeedDial,
-    body:has(#patientDetailsModal:not(.hidden)) #desktopPills { display: none !important; }
     .chart-layout { display:grid; grid-template-columns:1fr; gap:16px; max-width:1400px; margin:0 auto; align-items:start; }
     @media (min-width:900px){
       .chart-layout { grid-template-columns:360px 1fr; }

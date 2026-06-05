@@ -89,6 +89,7 @@
     window._fb = {
       auth: _auth, db: _db,
       signIn:  (email, pass) => setPersistence(_auth, browserLocalPersistence).catch(function(){}).then(function(){ return signInWithEmailAndPassword(_auth, email, pass); }),
+      signInAnon: ()         => signInAnonymously(_auth),
       signOut: ()            => signOut(_auth),
       onAuth:  (cb)          => onAuthStateChanged(_auth, cb),
       col:        (...p)     => collection(_db, ...p),
