@@ -120,8 +120,11 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     @media (max-width: 900px) {
-      .auth-media { display: none; }
-      .auth-form  { flex-basis: 100%; }
+      /* الموبايل: الفيديو خلفية ملء الشاشة + بطاقة الدخول فوقه */
+      .auth-media { display: block; position: fixed; inset: 0; z-index: 0; flex: none; }
+      .auth-media .auth-dots, .auth-media .auth-brand-badge { display: none; }
+      .auth-form  { position: relative; z-index: 1; flex-basis: 100%; background: transparent; padding: 24px 18px; min-height: 100vh; }
+      .auth-card  { background: rgba(255,255,255,.93); backdrop-filter: blur(10px); border-radius: 24px; padding: 30px 22px; box-shadow: 0 20px 50px rgba(0,0,0,.28); }
     }
   </style>
 </head>
@@ -132,8 +135,7 @@
     <!-- ===== لوحة الوسائط (يمين) — ضع فيديو media.mp4 أو صورة media.jpg داخل مجلد doctor ===== -->
     <aside class="auth-media">
       <!-- فيديو الخلفية (اختياري): ضع ملفاً باسم media.mp4 — أو احذف هذا الوسم واترك التدرّج -->
-      <video class="auth-media-bg" autoplay muted loop playsinline poster="media.jpg"
-             onerror="this.style.display='none';">
+      <video class="auth-media-bg" autoplay muted loop playsinline preload="auto" poster="media.jpg">
         <source src="media.mp4" type="video/mp4" />
       </video>
       <!-- للصورة بدل الفيديو: احذف <video> أعلاه واستخدم هذا بدلاً منه:
@@ -180,6 +182,9 @@
       </div>
     </section>
   </div>
+
+  <!-- تشغيل فيديو الخلفية (بعض المتصفحات تحتاج نداء play صريح) -->
+  <script>(function(){var v=document.querySelector('video.auth-media-bg');if(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});}})();</script>
 
   <!-- إعدادات العميل (Firebase + الأدوار) -->
   <script src="config.js"></script>
