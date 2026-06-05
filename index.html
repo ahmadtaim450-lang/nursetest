@@ -82,7 +82,7 @@
     // كاش محلّي دائم (IndexedDB) — يقلّل القراءات؛ مع fallback آمن
     let _db;
     try {
-      _db = initializeFirestore(_app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) });
+      _db = initializeFirestore(_app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }), experimentalAutoDetectLongPolling: true });
     } catch (e) {
       _db = getFirestore(_app);
     }

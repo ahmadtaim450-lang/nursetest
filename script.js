@@ -739,15 +739,16 @@
         function(e) { console.error('[appointments]', e); }
       );
 
-      // المرضى — [أقصى توفير] دفعة محدودة فقط (أول 40 بالاسم)، والبحث يجلب من الخادم
+      // المرضى — [أقصى توفير] لحظي لأول 40 بالاسم (يقرأ 40 مرّة واحدة ثم التغييرات فقط)، والبحث يجلب من الخادم
       if (_unsubPat) _unsubPat();
-      window._fb.getDocs(window._fb.query(window._fb.col('patients'), window._fb.orderBy('name'), window._fb.limit(40)))
-        .then(function(snap) {
+      _unsubPat = window._fb.onSnapshot(window._fb.query(window._fb.col('patients'), window._fb.orderBy('name'), window._fb.limit(40)),
+        function(snap) {
           allPatients = {};
           snap.forEach(function(d) { allPatients[d.id] = Object.assign({ id: d.id }, d.data()); });
           document.getElementById('totalPatientsCount').textContent = Object.keys(allPatients).length + '+';
           if (currentSection === 'patients') renderPatientBook();
-        }).catch(function(e) { console.error('[patients]', e); });
+        },
+        function(e) { console.error('[patients]', e); });
 
       // الأيام المغلقة
       if (_unsubClosed) _unsubClosed();
@@ -1878,8 +1879,9 @@
       renderChartVisits(patientId);
       document.getElementById('patientDetailsModal').dataset.patientId = patientId;
       document.getElementById('patientDetailsModal').classList.remove('hidden');
+      var _rail = document.getElementById('mainRail'); if (_rail) _rail.style.display = 'none';   // إخفاء السايدبار أثناء فتح الإضبارة
     }
-    window.closePatientDetailsModal = function() { document.getElementById('patientDetailsModal').classList.add('hidden'); };
+    window.closePatientDetailsModal = function() { document.getElementById('patientDetailsModal').classList.add('hidden'); var _rail = document.getElementById('mainRail'); if (_rail) _rail.style.display = ''; };   // إعادة إظهار السايدبار
 
     function renderChartVisits(pid) {
       const p = allPatients[pid]; const box = document.getElementById('chartVisitsList'); if (!box) return;
