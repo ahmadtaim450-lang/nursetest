@@ -41,15 +41,7 @@
              onSnapshot, getDocs, limit, addDoc, query, where, orderBy, serverTimestamp, writeBatch }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-    const firebaseConfig = {
-      apiKey:            "AIzaSyALjoxDqMB0W1Iq2ZOJvVviqg7ZNEnITF4",
-      authDomain:        "testdoc-abc01.firebaseapp.com",
-      projectId:         "testdoc-abc01",
-      storageBucket:     "testdoc-abc01.firebasestorage.app",
-      messagingSenderId: "790469564348",
-      appId:             "1:790469564348:web:0a5b58912300acc7b03db9",
-      measurementId:     "G-MDN0P4JYG7"
-    };
+    const firebaseConfig = window.FIREBASE_CONFIG;   // ← يأتي من config.js (الملف الوحيد للتعديل)
 
     const _app  = initializeApp(firebaseConfig);
     const _auth = getAuth(_app);
@@ -1334,7 +1326,7 @@
        ============================================================ -->
 
 
-  <script src="roles.js"></script>
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
