@@ -5,10 +5,10 @@
    ===================================================================== */
 window.DOCBOOK_ROLES = {
   doctor: [
-    'REPLACE_doctor@gmail.com'   // ← بريد جوجل الخاص بالطبيب
+    'ahmadtaim450@gmail.com'   // ← بريد جوجل الخاص بالطبيب
   ],
   nurse: [
-    'REPLACE_nurse@gmail.com'    // ← بريد جوجل الخاص بالممرضة
+    'aistam379@gmail.com'      // ← بريد جوجل الخاص بالممرضة
   ]
 };
 
