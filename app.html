@@ -66,6 +66,8 @@
              doc, collection, getDoc, setDoc, updateDoc, deleteDoc,
              onSnapshot, getDocs, limit, addDoc, query, where, orderBy, serverTimestamp, writeBatch }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { getStorage, ref as _sRef, uploadBytes, getDownloadURL }
+      from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 
     const firebaseConfig = window.FIREBASE_CONFIG;   // ← يأتي من config.js (الملف الوحيد للتعديل)
 
@@ -93,6 +95,11 @@
       addDoc:     (ref, d)   => addDoc(ref, d),
       onSnapshot, getDocs, limit, query, where, orderBy, serverTimestamp,
       batch: () => writeBatch(_db),
+      uploadLogo: function(role, file) {
+        const _st = getStorage(_app);
+        const ref  = _sRef(_st, 'logos/' + role);
+        return uploadBytes(ref, file).then(function(snap) { return getDownloadURL(snap.ref); });
+      },
     };
     // الحفظ المحلّي هو الافتراضي أصلاً — نضبطه في الخلفية دون انتظار حتى لا يتعلّق الدخول أبداً
     setPersistence(_auth, browserLocalPersistence).catch(function(){});

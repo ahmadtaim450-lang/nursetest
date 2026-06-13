@@ -1314,6 +1314,8 @@
       document.getElementById('logoPreviewIcon').classList.remove('hidden');
       document.getElementById('removeLogoBtn').classList.add('hidden');
       document.getElementById('logoFileInput').value = '';
+      saveSettingsToFirebase(settings);
+      applySettings();
     };
 
     // ================== Day State ==================
@@ -3423,21 +3425,23 @@
       });
       document.getElementById('closePatientDetailsModalBtn').addEventListener('click',()=>closePatientDetailsModal());
 
-      // Logo upload
+      // Logo upload → Firebase Storage
       document.getElementById('logoFileInput').addEventListener('change',function(e){
         const file=e.target.files[0]; if(!file) return;
         if(!file.type.startsWith('image/')){ showToast('الرجاء اختيار ملف صورة','error'); return; }
-        if(file.size>2*1024*1024){ showToast('حجم الصورة يجب أن يكون أقل من 2 ميغابايت','error'); return; }
-        const reader=new FileReader();
-        reader.onload=function(ev){
-          settings.logo=ev.target.result;
+        if(file.size>5*1024*1024){ showToast('حجم الصورة يجب أن يكون أقل من 5 ميغابايت','error'); return; }
+        showToast('جاري رفع الصورة…','');
+        window._fb.uploadLogo('nurse', file).then(function(url){
+          settings.logo = url;
           const previewImg=document.getElementById('logoPreviewImg');
           const previewIcon=document.getElementById('logoPreviewIcon');
           const removeBtn=document.getElementById('removeLogoBtn');
-          previewImg.src=ev.target.result; previewImg.classList.remove('hidden');
+          previewImg.src=url; previewImg.classList.remove('hidden');
           previewIcon.classList.add('hidden'); removeBtn.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
+          saveSettingsToFirebase(settings);
+          applySettings();
+          showToast('تم رفع الصورة بنجاح','success');
+        }).catch(function(err){ showToast('فشل رفع الصورة','error'); console.error(err); });
       });
     });
 
