@@ -1941,8 +1941,9 @@
       var s = _docSettings || {};
       var docName = s.title || 'الطبيب', specialty = s.specialty || '';
       var mobile = s.mobile || '', landline = s.landline || '', address = s.address || '';
+      var _printBase = window.location.href.replace(/\/[^\/]*(\?.*)?$/, '/');
       var emblem = '<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M50 86 C22 64 9 46 9 31 A20 20 0 0 1 50 23 A20 20 0 0 1 91 31 C91 46 78 64 50 86 Z" fill="none" stroke="#0d9488" stroke-width="3.4"/><rect x="44" y="36" width="12" height="30" rx="2" fill="#0d9488"/><rect x="35" y="45" width="30" height="12" rx="2" fill="#0d9488"/></svg>';
-      var brandHtml = '<div class="brand-emblem">' + emblem + '</div><div class="brand-text"><span class="b1">Doc</span><span class="b2">Book</span></div>';
+      var brandHtml = '<img src="brand-logo.png" alt="DocBook" style="max-width:120px;max-height:88px;object-fit:contain;display:block;">';
       var css = '@page{size:A4;margin:0;}'
         + '*{font-family:Cairo,Tajawal,Arial,sans-serif;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
         + 'html,body{margin:0;padding:0;background:#fff;}'
@@ -1984,7 +1985,7 @@
       var head = '<div class="head"><div class="docinfo"><div class="dname">' + escapeHtml(docName) + '</div>'
         + (specialty ? '<div class="dspec"><span class="dash">—</span> ' + escapeHtml(specialty) + ' <span class="dash">—</span></div>' : '')
         + '</div><div class="logo">' + brandHtml + '</div></div><div class="divider"></div>';
-      var html = '<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>' + pillText + '</title>'
+      var html = '<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><base href="' + _printBase + '"><title>' + pillText + '</title>'
         + '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
         + '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">'
         + '<style>' + css + '</style></head><body>'
